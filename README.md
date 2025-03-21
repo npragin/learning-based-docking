@@ -26,7 +26,6 @@ We train our models using Proximal Policy Optimization (PPO) and domain randomiz
 ### 1. Naive Position-Orientation-Reward Policy
 - Baseline approach trained on fixed dynamics
 - Observation consists of only the latest state
-- Reward function based solely on AUV's proximity to docking station, orientation, and stability
 
 ### 2. Small Domain-Randomized Policy
 - Trained with systematic randomization of mass between episodes
