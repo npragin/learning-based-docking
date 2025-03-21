@@ -32,14 +32,14 @@ We implemented and evaluated four distinct policy architectures:
 
 ### Reward Function
 
-Our reward function encourages efficient docking behavior:
-
 $$R(s_t, a_t) = λ_1 * R_{dist} + λ_2 * R_{orient}$$
 
 Where:
-$$R_{dist} = exp(-||p_t - p_dock||)$$
+
+$$R_{dist} = exp(-||p_t - p_{dock}||)$$
   - Rewards proximity to docking station
-$$R_{orient} = exp(-||θ_t - θ_dock||)$$
+
+$$R_{orient} = exp(-||θ_t - θ_{dock}||)$$
   - Rewards correct orientation
 
 ### Evaluation Protocol
