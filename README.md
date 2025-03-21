@@ -1,54 +1,65 @@
 # Learning-Based AUV Docking
 
-This repository contains the code for our project on developing robust autonomous underwater vehicle (AUV) docking policies using deep reinforcement learning in IsaacLab. Find the full report [here](readme_assets/report.pdf).
+This repository contains the code for our project on developing robust autonomous underwater vehicle (AUV) docking policies that maintain performance despite unseen, unpredictable dynamics, using deep reinforcement learning with domain randomization and history-conditioned policies in NVIDIA Isaac Simulator. Find the full report [here](readme_assets/report.pdf).
 
-## Overview
+## Motivation
 
 Autonomous docking is critical for long-term AUV missions, enabling data transmission, battery charging, and recovery. However, autonomous docking for underwater vehicles presents unique challenges due to:
-- Complex hydrodynamics and environmental disturbances
+- Complex, varying hydrodynamics and environmental forces
 - Limited visibility and sensing capabilities underwater
 - The high cost and risk of real-world testing
 
-Our approach leverages simulation-based reinforcement learning to develop policies that can generalize to out-of-distribution (OOD) vehicle dynamics - a critical capability for real-world deployment.
+Our approach leverages simulation-based reinforcement learning to develop policies that generalize to out-of-distribution (OOD) vehicle dynamics - a critical capability for real-world deployment.
 
-## Docking Environment
+## Simulation Environment
 
 Our simulation environment extends the AUV simulator built on NVIDIA's Isaac Labs framework. The physics model includes:
 
 - PhysX for non-hydrodynamic physics and collisions
 - MuJoCo-based hydrodynamic model for drag and buoyant forces
-- Zero-order thruster dynamics based on Yoerger et al.
+- Zero-order thruster dynamics
 
-## Policy Architectures
+## Policy Architectures and Training
 
-We implemented and evaluated four distinct policy architectures:
+We train our models using Proximal Policy Optimization (PPO) and domain randomization to improve generalization to OOD hydrodynamics. We implement and evaluate four distinct policy architectures for AUV docking tasks:
 
-1. **Naive Position-Orientation-Reward Policy**: Baseline trained on fixed dynamics
-2. **Small Domain-Randomized Policy**: Trained with smaller randomization range
-3. **Large Domain-Randomized Policy**: Trained with larger randomization range
-4. **Domain-Randomized History-Based Policy**: Incorporates both domain randomization and a history-based observation space
+### 1. Naive Position-Orientation-Reward Policy
+- Baseline approach trained on fixed dynamics
+- Observation consists of only the latest state
+- Reward function based solely on AUV's proximity to docking station, orientation, and stability
 
-## Methodology
+### 2. Small Domain-Randomized Policy
+- Trained with systematic randomization of mass between episodes
+- Maintains standard observation structure without historical information
 
-### Reward Function
+### 3. Large Domain-Randomized Policy
+- Similar to the small domain-randomized policy
+- Samples from a wider band of physical parameters
+
+### 4. Domain-Randomized History-Based Policy
+- Most comprehensive approach
+- Incorporates both domain randomization during training and temporal information
+- Observation space includes concatenated history of previous states and actions:
+  - `𝒪ₜ = {sₜ₋ₕ, aₜ₋ₕ, ..., sₜ, aₜ}`
+- Uses history length `h=3` based on preliminary experiments
+
+## Reward Function
 
 $$R(s_t, a_t) = λ_1 * R_{dist} + λ_2 * R_{orient}$$
 
 Where:
 
-$$R_{dist} = exp(-||p_t - p_{dock}||)$$
-  - Rewards proximity to docking station
+$R_{dist} = \text{exp}(-||p_t - p_{dock}||)$ rewards proximity to docking station
 
-$$R_{orient} = exp(-||θ_t - θ_{dock}||)$$
-  - Rewards correct orientation
+$R_{orient} = exp(-||θ_t - θ_{dock}||)$ rewards correct orientation
 
-### Evaluation Protocol
+## Evaluation Protocol
 
 We evaluated all policies under four conditions:
 1. **In-Distribution**: Mass = 11.5 kg
 2. **Edge-of-Distribution**: Mass = 13 kg
 3. **Out-of-Distribution**: Mass = 16.5 kg
-4. **Extreme Out-of-Distribution**: Mass = 21 kg
+4. **Extreme Out-of-Distribution**: Mass = 21.5 kg
 
 ### Performance Metrics
 - **Success Rate**: Percentage of successful docking attempts
@@ -57,11 +68,15 @@ We evaluated all policies under four conditions:
 - **Energy Efficiency**: Cumulative thruster usage
 - **Motion Smoothness**: Measured by cumulative jerk
 
-## Key Results
+## Key Findings
 
-- **Robustness**: The Large DR with History policy showed the strongest resilience at higher mass adjustments (OOD conditions)
-- **Performance Trade-offs**: Domain-randomized policies generally underperformed compared to the Naive Policy in in-distribution conditions but showed better generalization to OOD scenarios
-- **Control Efficiency**: Robustness to OOD conditions came at the cost of higher jerk and action costs
+- **Naive Policy**: Excels in standard and moderately increased mass conditions, proving simple control mechanisms work well in typical scenarios. Performance deteriorates significantly under extreme mass adjustments, revealing clear limitations in highly variable environments. This suggests the naive approach is optimal for predictable conditions but inadequate for extreme variations.
+
+- **Domain Randomization Policies**: Generally underperform compared to the Naive Policy in standard conditions, but show improved resilience in out-of-distribution scenarios. Large DR configurations demonstrate better generalization capabilities with no meaningful increase in convergence time. This indicates DR is valuable primarily for systems that must operate in unpredictable environments.
+
+- **Historical Data Integration**: Incorporating historical data did not consistently improve performance and occasionally diminished it, suggesting real-time state information may be sufficient. The DR with History policy, however, showed superior performance under high mass adjustment conditions. This indicates historical data can enhance robustness specifically in extreme scenarios, though alternative integration methods may need exploration.
+
+Figures can be found in our full report [here](readme_assets/report.pdf)
 
 ## Future Directions
 
