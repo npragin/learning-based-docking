@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot name="BlueRov2">
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <inertial>
+      <mass value="13.0"/>
+      <inertia
+        ixx="0.26" ixy="0" ixz="0"
+        iyy="0.23" iyz="0" izz="0.37"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="bluerov2_heavy.dae" scale="0.025 0.025 0.025"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="bluerov2_heavy.dae" scale="0.025 0.025 0.025"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot name="DockingStation">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <mesh filename="dsback.stl" scale="1 1 1"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="dsback.stl" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+</robot>
