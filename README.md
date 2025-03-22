@@ -4,6 +4,7 @@ This repository contains the code for our project on developing robust autonomou
 
 <div align="center">
   <img src="readme_assets/parallel_training.png" alt="Parallel training" width=60%>
+  
   <em>AUVs training in parallel in NVIDIA IsaacLab</em>
 </div>
 
