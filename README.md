@@ -113,7 +113,7 @@ Figures can be found in our full report [here](readme_assets/report.pdf)
 
 ```
 ./isaaclab.sh -p -m wandb login <wandb_api_key>
-WANDB_USERNAME=<wandb_username> ./isaaclab.sh -p source/standalone/workflows/rsl_rl/train.py --task Isaac-BlueROV2-Direct-v1 --num_envs 1
+WANDB_USERNAME=<wandb_username> ./isaaclab.sh -p source/standalone/workflows/rsl_rl/train.py --task Isaac-BlueROV2-Direct-v1 --num_envs 1 --log_project_name <wandb_project_name> --logger wand
 ```
 
 ### Additional Notes:
