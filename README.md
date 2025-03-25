@@ -3,8 +3,8 @@
 This repository contains the code for our project on developing robust autonomous underwater vehicle (AUV) docking policies that maintain performance despite unseen, unpredictable dynamics, using deep reinforcement learning with domain randomization and history-conditioned policies in NVIDIA Isaac Simulator. Find the full report [here](readme_assets/report.pdf).
 
 <div align="center">
-  <img src="readme_assets/eval.mp4" alt="Parallel training" width=60%>
-  <em>AUV Docking Policy Evaluation in NVIDIA IsaacLab</em>
+  <img src="readme_assets/eval.gif" alt="Parallel training" width=60%>
+  <p><em>AUV Docking Policy Evaluation in NVIDIA IsaacLab</em></p>
 </div>
 
 ## Motivation
@@ -25,6 +25,11 @@ Our simulation environment extends the AUV simulator built on NVIDIA's Isaac Lab
 - Zero-order thruster dynamics
 
 ## Policy Architectures and Training
+
+<div align="center">
+  <img src="readme_assets/train.gif" alt="Parallel training" width=60%>
+  <p><em>AUVs training in parallel in NVIDIA IsaacLab</em></p>
+</div>
 
 We train our models using Proximal Policy Optimization (PPO) and domain randomization to improve generalization to OOD hydrodynamics. We implement and evaluate four distinct policy architectures for AUV docking tasks:
 
