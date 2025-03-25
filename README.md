@@ -3,9 +3,8 @@
 This repository contains the code for our project on developing robust autonomous underwater vehicle (AUV) docking policies that maintain performance despite unseen, unpredictable dynamics, using deep reinforcement learning with domain randomization and history-conditioned policies in NVIDIA Isaac Simulator. Find the full report [here](readme_assets/report.pdf).
 
 <div align="center">
-  <img src="readme_assets/parallel_training.png" alt="Parallel training" width=60%>
-  
-  <em>AUVs training in parallel in NVIDIA IsaacLab</em>
+  <img src="readme_assets/eval.mp4" alt="Parallel training" width=60%>
+  <em>AUV Docking Policy Evaluation in NVIDIA IsaacLab</em>
 </div>
 
 ## Motivation
